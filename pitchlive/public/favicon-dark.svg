@@ -1,0 +1,29 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconDarkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#a78bfa" />
+      <stop offset="50%" stopColor="#c084fc" />
+      <stop offset="100%" stopColor="#f0abfc" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="30" fill="url(#faviconDarkGradient)"/>
+  
+  <!-- Microphone Icon -->
+  <path 
+    d="M32 18C27.0294 18 23 22.0294 23 27V29C23 33.9706 27.0294 38 32 38C36.9706 38 41 33.9706 41 29V27C41 22.0294 36.9706 18 32 18Z" 
+    fill="white"
+  />
+  <path 
+    d="M25 39C25 40.6569 26.3431 42 28 42H36C37.6569 42 39 40.6569 39 39H25Z" 
+    fill="white"
+  />
+  <line x1="32" y1="42" x2="32" y2="46" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+  
+  <!-- Live Indicator Dot -->
+  <circle cx="45" cy="18" r="4" fill="white">
+    <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
+

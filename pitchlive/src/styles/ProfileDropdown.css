@@ -1,0 +1,230 @@
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Poppins', sans-serif;
+  width: 40px;
+  height: 40px;
+}
+
+.profile-trigger:hover {
+  border-color: #667eea;
+  transform: scale(1.05);
+}
+
+.profile-trigger:active {
+  transform: scale(0.95);
+}
+
+.profile-avatar-small {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: white;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.profile-trigger:hover .profile-avatar-small {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: scale(1.05);
+}
+
+.profile-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
+  z-index: 1000;
+  overflow: hidden;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-menu-header {
+  padding: 1.5rem;
+  background: var(--primary-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-avatar-medium {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: white;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.profile-menu-info h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-menu-info p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-menu-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+.profile-menu-items {
+  padding: 0.5rem;
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-menu-item:hover {
+  background: #f7fafc;
+  color: #667eea;
+}
+
+.profile-menu-item svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.profile-menu-item:hover svg {
+  color: #667eea;
+}
+
+.profile-menu-item.logout-item {
+  color: #ef4444;
+}
+
+.profile-menu-item.logout-item:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.profile-menu-item.logout-item svg {
+  color: #ef4444;
+}
+
+.profile-menu-item.logout-item:hover svg {
+  color: #dc2626;
+}
+
+.theme-toggle-item {
+  /* Special styling for theme toggle */
+}
+
+/* Dark Theme */
+.dark .profile-trigger {
+  border-color: transparent;
+  background: transparent;
+}
+
+.dark .profile-trigger:hover {
+  border-color: #667eea;
+}
+
+.dark .profile-avatar-small {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .profile-menu {
+  background: #1e293b;
+  border: 1px solid #334155;
+}
+
+.dark .profile-menu-divider {
+  background: #334155;
+}
+
+.dark .profile-menu-item {
+  color: var(--text-primary);
+}
+
+.dark .profile-menu-item:hover {
+  background: #0f172a;
+  color: #667eea;
+}
+
+.dark .profile-menu-item.logout-item:hover {
+  background: #2d1b1b;
+}
+
+@media (max-width: 768px) {
+  .profile-trigger {
+    width: 36px;
+    height: 36px;
+  }
+
+  .profile-avatar-small {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .profile-menu {
+    right: -20px;
+    min-width: 260px;
+  }
+}
+
