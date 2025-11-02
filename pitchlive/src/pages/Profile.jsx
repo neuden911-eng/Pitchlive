@@ -1,16 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
 import ThemeToggle from '../components/ThemeToggle'
+import { useAuth } from '../hooks/useAuth.js'
 import '../styles/Profile.css'
 
 export default function Profile() {
   const navigate = useNavigate()
-  const [userType] = useState(() => {
-    // Get from localStorage or URL params (default to founder for demo)
-    return localStorage.getItem('userType') || 'founder'
-  })
+  const { user, isAuthenticated, updateUser, logout } = useAuth()
   const [activeTab, setActiveTab] = useState('overview')
+  const [editing, setEditing] = useState(false)
+  const [profileForm, setProfileForm] = useState({
+    name: '',
+    email: '',
+    company: '',
+    password: '',
+    confirmPassword: ''
+  })
+  const [formErrors, setFormErrors] = useState({})
+  const [submitting, setSubmitting] = useState(false)
 
   // Mock data - replace with actual API data
   const founderData = {
