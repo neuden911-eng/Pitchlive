@@ -20,11 +20,29 @@ export default function Profile() {
   const [formErrors, setFormErrors] = useState({})
   const [submitting, setSubmitting] = useState(false)
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login')
+      return
+    }
+
+    // Initialize form with current user data
+    if (user) {
+      setProfileForm({
+        name: user.name || '',
+        email: user.email || '',
+        company: user.company || '',
+        password: '',
+        confirmPassword: ''
+      })
+    }
+  }, [user, isAuthenticated, navigate])
+
   // Mock data - replace with actual API data
   const founderData = {
-    name: 'Alex Johnson',
-    email: 'alex@startupco.com',
-    company: 'TechStart Inc.',
+    name: user?.name || 'Alex Johnson',
+    email: user?.email || 'alex@startupco.com',
+    company: user?.company || 'TechStart Inc.',
     verified: true,
     trustScore: 42,
     totalRaised: '$2.5M',
@@ -36,9 +54,9 @@ export default function Profile() {
   }
 
   const investorData = {
-    name: 'Sarah Mitchell',
-    email: 'sarah@venturefund.com',
-    company: 'TechVenture Capital',
+    name: user?.name || 'Sarah Mitchell',
+    email: user?.email || 'sarah@venturefund.com',
+    company: user?.company || 'TechVenture Capital',
     verified: true,
     trustScore: 58,
     totalInvested: '$15.2M',
@@ -49,7 +67,112 @@ export default function Profile() {
     investmentFocus: ['SaaS', 'FinTech', 'AI/ML']
   }
 
+  const userType = user?.userType || 'founder'
   const data = userType === 'founder' ? founderData : investorData
+
+  const handleEditProfile = () => {
+    setEditing(true)
+    setProfileForm({
+      name: user?.name || '',
+      email: user?.email || '',
+      company: user?.company || '',
+      password: '',
+      confirmPassword: ''
+    })
+  }
+
+  const handleCancelEdit = () => {
+    setEditing(false)
+    setFormErrors({})
+    setProfileForm({
+      name: user?.name || '',
+      email: user?.email || '',
+      company: user?.company || '',
+      password: '',
+      confirmPassword: ''
+    })
+  }
+
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target
+    setProfileForm(prev => ({
+      ...prev,
+      [name]: value
+    }))
+
+    // Clear error when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }))
+    }
+  }
+
+  const handleSaveProfile = async () => {
+    const newErrors = {}
+
+    // Validate name
+    if (!profileForm.name.trim()) {
+      newErrors.name = 'Name is required'
+    }
+
+    // Validate email
+    if (!profileForm.email) {
+      newErrors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(profileForm.email)) {
+      newErrors.email = 'Email is invalid'
+    }
+
+    // Validate password if provided
+    if (profileForm.password) {
+      if (profileForm.password.length < 8) {
+        newErrors.password = 'Password must be at least 8 characters'
+      }
+      if (profileForm.password !== profileForm.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match'
+      }
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setFormErrors(newErrors)
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      const updateData = {
+        name: profileForm.name.trim(),
+        email: profileForm.email,
+        company: profileForm.company,
+      }
+
+      // Only include password if it's provided
+      if (profileForm.password) {
+        updateData.password = profileForm.password
+      }
+
+      await updateUser(updateData)
+      setEditing(false)
+      setFormErrors({})
+
+      // Reset password fields
+      setProfileForm(prev => ({
+        ...prev,
+        password: '',
+        confirmPassword: ''
+      }))
+    } catch (error) {
+      setFormErrors({ general: error.message })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   return (
     <div className="profile-container">
