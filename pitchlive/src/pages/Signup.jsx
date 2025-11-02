@@ -34,7 +34,7 @@ export default function Signup() {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = {}
 
@@ -67,14 +67,45 @@ export default function Signup() {
       return
     }
 
-    // Simulate signup (replace with actual API call)
-    console.log('Signup attempt:', formData)
-    // Save user type and name to localStorage
-    localStorage.setItem('userType', formData.userType)
-    localStorage.setItem('userName', formData.name || (formData.userType === 'founder' ? 'Alex Johnson' : 'Sarah Mitchell'))
-    localStorage.setItem('isLoggedIn', 'true')
-    // Navigate to home page after successful signup
-    navigate('/')
+    setSubmitting(true)
+    try {
+      const result = await signup({
+        name: formData.name.trim(),
+        email: formData.email,
+        password: formData.password,
+        userType: formData.userType,
+      })
+
+      if (result.requiresVerification) {
+        // Navigate to verification page with email in state
+        navigate('/verification', {
+          state: {
+            email: formData.email,
+            message: result.message
+          }
+        })
+      } else {
+        // Direct login successful
+        const dashboardRoute = formData.userType === 'founder' ? '/founder-dashboard' : '/investor-dashboard'
+        navigate(dashboardRoute)
+      }
+    } catch (error) {
+      setErrors({ general: error.message })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleGoogleSignup = () => {
+    // In a real implementation, this would integrate with Google OAuth
+    // For now, we'll show a placeholder
+    console.log('Google signup not implemented yet')
+  }
+
+  const handleGitHubSignup = () => {
+    // In a real implementation, this would integrate with GitHub OAuth
+    // For now, we'll show a placeholder
+    console.log('GitHub signup not implemented yet')
   }
 
   return (
