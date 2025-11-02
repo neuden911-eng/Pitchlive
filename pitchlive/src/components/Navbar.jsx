@@ -46,8 +46,8 @@ export default function Navbar() {
           <li><Link to="/features">Features</Link></li>
           <li><Link to="/users">For Users</Link></li>
           <li><Link to="/technology">Technology</Link></li>
-          {isLoggedIn ? (
-            <li><ProfileDropdown /></li>
+          {isAuthenticated ? (
+            <li><ProfileDropdown user={user} onLogout={handleLogout} /></li>
           ) : (
             <>
               <li><Link to="/login" className="btn btn-secondary"><span>Login</span></Link></li>
