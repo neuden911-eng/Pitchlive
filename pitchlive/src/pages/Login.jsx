@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
 import ThemeToggle from '../components/ThemeToggle'
+import { useAuth } from '../hooks/useAuth.js'
 import '../styles/Auth.css'
 
 export default function Login() {
