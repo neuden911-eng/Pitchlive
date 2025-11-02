@@ -15,7 +15,9 @@ export default function Signup() {
     agreeToTerms: false
   })
   const [errors, setErrors] = useState({})
+  const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
+  const { signup } = useAuth()
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
