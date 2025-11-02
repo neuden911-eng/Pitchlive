@@ -9,10 +9,13 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    userType: 'founder'
+    userType: 'founder',
+    rememberMe: false
   })
   const [errors, setErrors] = useState({})
+  const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleChange = (e) => {
     const { name, value } = e.target
