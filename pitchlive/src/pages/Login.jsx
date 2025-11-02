@@ -32,7 +32,7 @@ export default function Login() {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = {}
 
@@ -53,14 +53,37 @@ export default function Login() {
       return
     }
 
-    // Simulate login (replace with actual API call)
-    console.log('Login attempt:', formData)
-    // Save user type and name to localStorage
-    localStorage.setItem('userType', formData.userType)
-    localStorage.setItem('userName', formData.userType === 'founder' ? 'Alex Johnson' : 'Sarah Mitchell')
-    localStorage.setItem('isLoggedIn', 'true')
-    // Navigate to home page after successful login
-    navigate('/')
+    setSubmitting(true)
+    try {
+      const result = await login(formData.email, formData.password, formData.userType)
+
+      // Store remember me preference
+      if (formData.rememberMe) {
+        localStorage.setItem('rememberMe', 'true')
+      } else {
+        localStorage.removeItem('rememberMe')
+      }
+
+      // Navigate to appropriate dashboard based on user type
+      const dashboardRoute = formData.userType === 'founder' ? '/founder-dashboard' : '/investor-dashboard'
+      navigate(dashboardRoute)
+    } catch (error) {
+      setErrors({ general: error.message })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleGoogleLogin = () => {
+    // In a real implementation, this would integrate with Google OAuth
+    // For now, we'll show a placeholder
+    console.log('Google login not implemented yet')
+  }
+
+  const handleGitHubLogin = () => {
+    // In a real implementation, this would integrate with GitHub OAuth
+    // For now, we'll show a placeholder
+    console.log('GitHub login not implemented yet')
   }
 
   return (
