@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 import ProfileDropdown from './ProfileDropdown'
+import { useAuth } from '../hooks/useAuth.js'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { isAuthenticated, user, logout } = useAuth()
   const location = useLocation()
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup'
+  const navigate = useNavigate()
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/verification'
 
-  useEffect(() => {
-    // Check if user is logged in
-    const userType = localStorage.getItem('userType')
-    setIsLoggedIn(!!userType)
-  }, [location])
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   useEffect(() => {
     const handleScroll = () => {
