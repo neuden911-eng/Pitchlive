@@ -78,8 +78,8 @@ export default function ProfileDropdown({ user, onLogout }) {
               <span>My Profile</span>
             </Link>
 
-            <Link 
-              to="/dashboard" 
+            <Link
+              to={userType === 'founder' ? '/founder-dashboard' : '/investor-dashboard'}
               className="profile-menu-item"
               onClick={() => setIsOpen(false)}
             >
