@@ -433,41 +433,156 @@ export default function Profile() {
 
           {activeTab === 'settings' && (
             <div className="profile-settings">
-              <h2>Profile Settings</h2>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                <h2>Profile Settings</h2>
+                {!editing && (
+                  <button
+                    onClick={handleEditProfile}
+                    className="btn btn-secondary"
+                  >
+                    Edit Profile
+                  </button>
+                )}
+              </div>
+
+              {formErrors.general && (
+                <div className="error-message general-error" style={{ marginBottom: '1rem' }}>
+                  {formErrors.general}
+                </div>
+              )}
+
               <div className="settings-form">
-                <div className="form-group">
-                  <label>Full Name</label>
-                  <input 
-                    type="text" 
-                    defaultValue={data.name}
-                    onChange={(e) => localStorage.setItem('userName', e.target.value)}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input type="email" defaultValue={data.email} />
-                </div>
-                <div className="form-group">
-                  <label>{userType === 'founder' ? 'Company Name' : 'Investment Firm'}</label>
-                  <input type="text" defaultValue={data.company} />
-                </div>
-                <div className="form-group">
-                  <label>Password</label>
-                  <input type="password" placeholder="Enter new password" />
-                </div>
-                <div className="form-group">
-                  <label>Confirm Password</label>
-                  <input type="password" placeholder="Confirm new password" />
-                </div>
-                <button 
-                  className="btn btn-primary"
-                  onClick={() => {
-                    alert('Settings saved successfully!')
-                    window.location.reload()
-                  }}
-                >
-                  Save Changes
-                </button>
+                {editing ? (
+                  <>
+                    <div className="form-group">
+                      <label>Full Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={profileForm.name}
+                        onChange={handleProfileChange}
+                        className={formErrors.name ? 'error' : ''}
+                      />
+                      {formErrors.name && <span className="error-message">{formErrors.name}</span>}
+                    </div>
+
+                    <div className="form-group">
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={profileForm.email}
+                        onChange={handleProfileChange}
+                        className={formErrors.email ? 'error' : ''}
+                      />
+                      {formErrors.email && <span className="error-message">{formErrors.email}</span>}
+                    </div>
+
+                    <div className="form-group">
+                      <label>{userType === 'founder' ? 'Company Name' : 'Investment Firm'}</label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={profileForm.company}
+                        onChange={handleProfileChange}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>New Password (leave blank to keep current)</label>
+                      <input
+                        type="password"
+                        name="password"
+                        value={profileForm.password}
+                        onChange={handleProfileChange}
+                        placeholder="Enter new password"
+                        className={formErrors.password ? 'error' : ''}
+                      />
+                      {formErrors.password && <span className="error-message">{formErrors.password}</span>}
+                    </div>
+
+                    <div className="form-group">
+                      <label>Confirm New Password</label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        value={profileForm.confirmPassword}
+                        onChange={handleProfileChange}
+                        placeholder="Confirm new password"
+                        className={formErrors.confirmPassword ? 'error' : ''}
+                      />
+                      {formErrors.confirmPassword && <span className="error-message">{formErrors.confirmPassword}</span>}
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                      <button
+                        onClick={handleSaveProfile}
+                        disabled={submitting}
+                        className="btn btn-primary"
+                      >
+                        {submitting ? 'Saving...' : 'Save Changes'}
+                      </button>
+                      <button
+                        onClick={handleCancelEdit}
+                        disabled={submitting}
+                        className="btn btn-secondary"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="form-group">
+                      <label>Full Name</label>
+                      <input
+                        type="text"
+                        value={data.name}
+                        disabled
+                        style={{ background: '#f8fafc' }}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Email</label>
+                      <input
+                        type="email"
+                        value={data.email}
+                        disabled
+                        style={{ background: '#f8fafc' }}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>{userType === 'founder' ? 'Company Name' : 'Investment Firm'}</label>
+                      <input
+                        type="text"
+                        value={data.company}
+                        disabled
+                        style={{ background: '#f8fafc' }}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Account Type</label>
+                      <input
+                        type="text"
+                        value={userType === 'founder' ? 'Founder' : 'Investor'}
+                        disabled
+                        style={{ background: '#f8fafc', textTransform: 'capitalize' }}
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                      <button
+                        onClick={handleLogout}
+                        className="btn btn-outline"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}
