@@ -31,10 +31,10 @@ export default function ProfileDropdown({ user, onLogout }) {
   }, [isOpen])
 
   const handleLogout = () => {
-    localStorage.removeItem('userType')
-    localStorage.removeItem('userName')
     setIsOpen(false)
-    navigate('/')
+    if (onLogout) {
+      onLogout()
+    }
   }
 
   const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase()
