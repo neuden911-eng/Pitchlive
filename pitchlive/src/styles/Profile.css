@@ -349,6 +349,30 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.settings-form input.error {
+  border-color: #ef4444;
+}
+
+.settings-form input.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.settings-form .error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: -0.25rem;
+}
+
+.settings-form .general-error {
+  text-align: center;
+  padding: 0.75rem;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
 /* Dark Theme */
 .dark .profile-header {
   background: rgba(15, 23, 42, 0.9);
