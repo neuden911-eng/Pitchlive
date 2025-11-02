@@ -151,14 +151,29 @@ export default function Login() {
 
             <div className="form-options">
               <label className="checkbox-label">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleChange}
+                />
                 <span>Remember me</span>
               </label>
               <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
             </div>
 
-            <button type="submit" className="btn btn-primary btn-full">
-              Sign In
+            {errors.general && (
+              <div className="error-message general-error">
+                {errors.general}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="btn btn-primary btn-full"
+              disabled={submitting}
+            >
+              {submitting ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 
