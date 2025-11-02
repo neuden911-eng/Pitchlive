@@ -3,16 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import '../styles/ProfileDropdown.css'
 
-export default function ProfileDropdown() {
+export default function ProfileDropdown({ user, onLogout }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [userType] = useState(() => localStorage.getItem('userType') || 'founder')
-  const [userName] = useState(() => {
-    // Get from localStorage or use default
-    return localStorage.getItem('userName') || (userType === 'founder' ? 'Alex Johnson' : 'Sarah Mitchell')
-  })
   const dropdownRef = useRef(null)
   const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
+
+  // Get user info from props or localStorage as fallback
+  const userName = user?.name || localStorage.getItem('userName') || 'User'
+  const userType = user?.userType || localStorage.getItem('userType') || 'founder'
 
   // Close dropdown when clicking outside
   useEffect(() => {
